@@ -1,35 +1,20 @@
 #! /usr/bin/env ruby
 require 'sinatra'
+require 'pathname'
 
 get "/" do
-  dir = "./public/"
-  bigness = 5
-  out = "<big>"*bigness
-  out += "<h3 style='+3'>your files</h3>"
-  Dir[dir+"*"].each do |file| 
-    out+=make_link(dir,file)
-  end
-  out+="</big>"*bigness
-end
-
-get "/foo" do
-  dir = "./public/files/"
-  #bigness = 5
-  #out = "<big>"*bigness
-  #out += "<h3 style='+3'>your files</h3>"
+  dir = "./files/"
   @links = Dir[dir+"*"].map { |file| 
     entry(dir,file)
   }
-  erb :iphone
-  #out+="</big>"*bigness
-  
+  erb :index
 end
 
 helpers do
 
   def entry(dir,file)
-    relative = file.gsub(dir,"")
-    "<li><a href='#{"files/"+relative}' target='_self'>#{relative}</a></li>"
+    filename = Pathname.new(file).basename
+    "<li><a href='#{file}' target='_self'>#{filename}</a></li>"
   end
   
 end
@@ -39,24 +24,6 @@ use_in_file_templates!
 __END__
 
 @@ index
-<html>
-  <head>
-    <style type="text/css">
-      h1 {font-size: 300%}
-      p {font-size: 300%}
-    </style>
-  </head>
-
-<body>
-  <h1>Your files, sir. Enjoy.</h1>
-  <p>
-    <%= @links %>
-  </p>
-</body>
-
-</html>
-
-@@ iphone
 <html>
   <head>
     <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>

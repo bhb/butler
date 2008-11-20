@@ -6,7 +6,7 @@ get "/" do
   dir = "./files/"
   @links = Dir[dir+"*"].map { |file| 
     file_link(dir,file)
-  }
+  }.join
   erb :index
 end
 

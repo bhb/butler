@@ -18,18 +18,18 @@ get "/foo" do
   #out = "<big>"*bigness
   #out += "<h3 style='+3'>your files</h3>"
   @links = Dir[dir+"*"].map { |file| 
-    make_link(dir,file)
+    entry(dir,file)
   }
-  erb :index
+  erb :iphone
   #out+="</big>"*bigness
   
 end
 
 helpers do
 
-  def make_link(dir,file)
+  def entry(dir,file)
     relative = file.gsub(dir,"")
-    "<a href='#{relative}'>#{relative}</a><br/><br/>"
+    "<li><a href='#{"files/"+relative}' target='_self'>#{relative}</a></li>"
   end
   
 end
@@ -53,5 +53,24 @@ __END__
     <%= @links %>
   </p>
 </body>
+
+</html>
+
+@@ iphone
+<html>
+  <head>
+    <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
+    <style type="text/css" media="screen">@import "/stylesheets/iui.css";</style>
+    <script type="application/x-javascript" src="/javascripts/iui.js"></script>
+  </head>
+
+  <body>
+    <div class="toolbar">
+    <h1 id="pageTitle"></h1>
+    </div>
+    <ul id="home" title="Your files, sir." selected="true">
+       <%= @links %>
+    </ul>
+  </body>
 
 </html>

@@ -13,7 +13,7 @@ get "/" do
 end
 
 get "/foo" do
-  dir = "./public/"
+  dir = "./public/files/"
   #bigness = 5
   #out = "<big>"*bigness
   #out += "<h3 style='+3'>your files</h3>"

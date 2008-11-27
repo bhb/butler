@@ -5,14 +5,14 @@ require 'pathname'
 get "/" do
   dir = "./files/"
   @links = Dir[dir+"*"].map { |file| 
-    file_link(file)
+    file_link(dir,file)
   }.join
   erb :index
 end
 
 helpers do
 
-  def file_link(file)
+  def file_link(dir,file)
     filename = Pathname.new(file).basename
     "<li><a href='#{file}' target='_self'>#{filename}</a></li>"
   end
